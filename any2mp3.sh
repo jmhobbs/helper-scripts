@@ -1,12 +1,10 @@
-#!/usr/bin/python
+#!/bin/bash
 
-# Simple KDE Color Chooser Tool
-# http://www.velvetcache.org/2009/07/17/kolortool-for-kde-4
+# any2mp3.sh
+# http://www.velvetcache.org/2008/03/18/any2mp3
 # http://github.com/jmhobbs/helper-scripts
 #
-# What you actually want is http://www.kde.org/applications/graphics/kcolorchooser/
-#
-# Copyright (c) 2009-2010 John Hobbs
+# Copyright (c) 2008-2010 John Hobbs
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -30,14 +28,14 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 # CHANGELOG
-# 2009-07-17 - Created script. (John Hobbs)
+# 2008-03-18 - Created script. (John Hobbs)
 
-import sys
-from PyQt4 import QtGui
-from PyKDE4 import kdeui
+for i in *.$1; do
+	mplayer -vc null -vo null -ao pcm:fast "$i" -ao pcm:file="${i%.$1}.wav"
+done
 
-app = QtGui.QApplication( sys.argv )
-picker = kdeui.KColorDialog();
-picker.show();
+for i in *.wav; do
+	lame -h -V2 --vbr-new "$i" "${i%.wav}.mp3"
+done
 
-sys.exit( app.exec_() );
+rm *.wav

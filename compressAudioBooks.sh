@@ -1,12 +1,9 @@
-#!/usr/bin/python
+#!/bin/bash
 
-# Simple KDE Color Chooser Tool
-# http://www.velvetcache.org/2009/07/17/kolortool-for-kde-4
+# compressAudioBooks.sh
 # http://github.com/jmhobbs/helper-scripts
 #
-# What you actually want is http://www.kde.org/applications/graphics/kcolorchooser/
-#
-# Copyright (c) 2009-2010 John Hobbs
+# Copyright (c) 2010 John Hobbs
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -30,14 +27,10 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 # CHANGELOG
-# 2009-07-17 - Created script. (John Hobbs)
+# 2010-07-27 - Released script. (John Hobbs)
+# ????-??-?? - Created script. (John Hobbs)
 
-import sys
-from PyQt4 import QtGui
-from PyKDE4 import kdeui
-
-app = QtGui.QApplication( sys.argv )
-picker = kdeui.KColorDialog();
-picker.show();
-
-sys.exit( app.exec_() );
+mkdir -p processed/
+for A in *.mp3; do
+	lame -h -b 64 --mp3input "$A" processed/"$A";
+done
