@@ -28,10 +28,14 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 # CHANGELOG
+# 2010-08-15 - Added case insensitivity for filenames, thanks to Glenn Turnbull. (John Hobbs)
 # 2010-06-14 - Fixed contact sheet problem, thanks to Glenn Turnbull. (John Hobbs)
 # 2009-03-30 - Created script. (John Hobbs)
 
 ### SETTINGS ###
+
+# Turn On No-Case Globbing
+shopt -s nocaseglob
 
 # Scaling Methods:
 # resize (Best/Slow)
@@ -111,3 +115,6 @@ if [ "" != "$LIST" ]; then
 	echo "$PAGE of $PAGES"
 	montage -label %f -quality $CONTACTQUALITY -frame 5 -tile ${CONTACTWIDTH}x${CONTACTHEIGHT} -geometry ${CONTACTSIZE}+${CONTACTSPACINGH}+${CONTACTSPACINGV} $LIST jpg:- > ${CONTACTDIR}/${PAGE}.jpg
 fi
+
+# Turn Off No-Case Globbing
+shopt -u nocaseglob
