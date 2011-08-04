@@ -69,3 +69,15 @@ This script will turn on your screen saver in KDE.
 This script will turn on your screen saver in KDE, then turn your monitor off.
 
 **Usage:** ./ScreenSaverOnAndMonitorOff
+
+## mkpwd
+
+**Language:** sh
+
+**Requirements:** /dev/urandom, base64
+
+Generate a password string (72 chars).  If you want a shorter one pipe it through:
+
+    $ mkpwd | head -c 10
+    a7+hsy182n
+
