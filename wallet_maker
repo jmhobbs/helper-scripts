@@ -109,10 +109,7 @@ LIST=""
 for i in *.jpg *.JPG; do
    if [ $(($CTR % $CONTACTCOUNT)) -eq 0 ] && [ $CTR -ne 0 ]; then
        echo "$PAGE of $PAGES"
-       montage -rotate "90>" -quality $CONTACTQUALITY -tile
-${CONTACTWIDTH}x${CONTACTHEIGHT} -geometry
-${CONTACTSIZE}+${CONTACTSPACINGH}+${CONTACTSPACINGV} $LIST jpg:- >
-${CONTACTDIR}/${PAGE}.jpg
+       montage -rotate "90>" -quality $CONTACTQUALITY -tile ${CONTACTWIDTH}x${CONTACTHEIGHT} -geometry ${CONTACTSIZE}+${CONTACTSPACINGH}+${CONTACTSPACINGV} $LIST jpg:- > ${CONTACTDIR}/${PAGE}.jpg
        LIST=""
        PAGE=$(($PAGE + 1))
    fi
@@ -122,9 +119,6 @@ done
 
 if [ "" != "$LIST" ]; then
    echo "$PAGE of $PAGES"
-   montage -rotate "90>" -quality $CONTACTQUALITY -tile
-${CONTACTWIDTH}x${CONTACTHEIGHT} -geometry
-${CONTACTSIZE}+${CONTACTSPACINGH}+${CONTACTSPACINGV} $LIST jpg:- >
-${CONTACTDIR}/${PAGE}.jpg
+   montage -rotate "90>" -quality $CONTACTQUALITY -tile ${CONTACTWIDTH}x${CONTACTHEIGHT} -geometry ${CONTACTSIZE}+${CONTACTSPACINGH}+${CONTACTSPACINGV} $LIST jpg:- > ${CONTACTDIR}/${PAGE}.jpg
 fi
 
