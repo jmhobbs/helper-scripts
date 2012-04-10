@@ -44,6 +44,7 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 # CHANGELOG
+# 2012-04-10 - Small tweaks for error handling. (John Hobbs)
 # 2012-04-07 - Created Wallet Photo Script using John Hobbs's original script. (Phillip Vuchetich)
 # 2010-06-14 - Fixed contact sheet problem, thanks to Glenn Turnbull. (John Hobbs)
 # 2009-03-30 - Created script. (John Hobbs)
@@ -89,7 +90,7 @@ CONTACTQUALITY="100"
 CONTACTCOUNT=$(($CONTACTWIDTH * $CONTACTHEIGHT))
 
 # Allow .jpg and .JPG files - depending on how the file was stored.
-PIX=$(ls -l *.jpg *.JPG | wc -l)
+PIX=$(ls -l *.jpg *.JPG 2> /dev/null | wc -l)
 
 echo "Processing $PIX Images"
 echo
