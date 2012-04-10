@@ -1,0 +1,130 @@
+#!/bin/bash
+
+# Wallet Photo Script using ImageMagick
+#
+# Copyright (c) 2012 Phillip Vuchetich
+#
+# Permissions for the Wallet Photo Script are the same as the original script by John Hobbs.
+#
+# This script was created to take an entire directory of photos as input,
+# rotate them to portrait layout, and create composite 2x2 sheets, suitable
+# for printing wallet sized photos standard 4"x6" (US) photo paper.
+# This was created to make it easy to send photos suitable for wallets or
+# scrapbooking sized photos to retail photo printing locations.
+# The use case is a manually pre-selected copy of images that are all placed
+# in the input directory (the current directory).
+# An output directory will be created if it does not exist.
+
+# Original script from John Hobbs:
+# Digital camera thumbnail/contact sheet tool.
+# http://www.velvetcache.org/2009/03/30/imagemagick-thumbnails-and-contact-sheets
+# http://github.com/jmhobbs/helper-scripts
+#
+# Copyright (c) 2009-2010 John Hobbs
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation
+# files (the "Software"), to deal in the Software without
+# restriction, including without limitation the rights to use,
+# copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following
+# conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+
+# CHANGELOG
+# 2012-04-07 - Created Wallet Photo Script using John Hobbs's original script. (Phillip Vuchetich)
+# 2010-06-14 - Fixed contact sheet problem, thanks to Glenn Turnbull. (John Hobbs)
+# 2009-03-30 - Created script. (John Hobbs)
+
+### SETTINGS ###
+# Scaling Methods:
+# resize (Best/Slow)
+# scale (Middle/Middle)
+# sample (Worst/Fast)
+METHOD="resize"
+
+# Wallet image Size
+# For Wallets intended for 4" x 6" output, should be a multiple of 4x6 to minimize cropping.
+# Example: for 4x6, 300ppi use 600x900 (for each photo to be 2"x3").
+# For 400 ppi use 800x1200
+# Talk to your photo print shop to ask what resolution the printers use, so that their image
+# software does not need to resize your image, as resizing will likely reduce quality a little.
+# Expect to see some white space, depending on the original image dimensions.
+# No cropping is performed.
+CONTACTSIZE="600x900"
+
+# Contact Sheet Max Width
+CONTACTWIDTH="2"
+
+# Contact Sheet Max Height
+CONTACTHEIGHT="2"
+
+# Horizontal Spacing
+CONTACTSPACINGH="0"
+
+# Vertical Spacing
+CONTACTSPACINGV="0"
+
+# Contact Sheet Directory
+CONTACTDIR="wallet"
+
+# Contact Sheet Quality
+CONTACTQUALITY="100"
+
+################
+
+
+CONTACTCOUNT=$(($CONTACTWIDTH * $CONTACTHEIGHT))
+
+# Allow .jpg and .JPG files - depending on how the file was stored.
+PIX=$(ls -l *.jpg *.JPG | wc -l)
+
+echo "Processing $PIX Images"
+echo
+echo "Creating Wallet Photo Sheets"
+
+mkdir -p $CONTACTDIR
+
+CTR=0
+PAGES=$(($PIX / $CONTACTCOUNT))
+if [ $(($PIX % $CONTACTCOUNT)) -ne 0 ]; then
+   PAGES=$(($PAGES + 1))
+fi
+PAGE=1
+LIST=""
+
+# Allow .jpg and .JPG files - depending on how the file was stored.
+for i in *.jpg *.JPG; do
+   if [ $(($CTR % $CONTACTCOUNT)) -eq 0 ] && [ $CTR -ne 0 ]; then
+       echo "$PAGE of $PAGES"
+       montage -rotate "90>" -quality $CONTACTQUALITY -tile
+${CONTACTWIDTH}x${CONTACTHEIGHT} -geometry
+${CONTACTSIZE}+${CONTACTSPACINGH}+${CONTACTSPACINGV} $LIST jpg:- >
+${CONTACTDIR}/${PAGE}.jpg
+       LIST=""
+       PAGE=$(($PAGE + 1))
+   fi
+   LIST="$LIST $i"
+   CTR=$(($CTR + 1))
+done
+
+if [ "" != "$LIST" ]; then
+   echo "$PAGE of $PAGES"
+   montage -rotate "90>" -quality $CONTACTQUALITY -tile
+${CONTACTWIDTH}x${CONTACTHEIGHT} -geometry
+${CONTACTSIZE}+${CONTACTSPACINGH}+${CONTACTSPACINGV} $LIST jpg:- >
+${CONTACTDIR}/${PAGE}.jpg
+fi
+
