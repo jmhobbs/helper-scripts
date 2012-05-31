@@ -1,0 +1,25 @@
+#!/bin/bash
+
+REQUEST_INTERVAL="3"
+MAX_DOWNLOAD_SPEED="50k"
+USER_AGENT='Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)'
+
+if [ "$#" -eq 1 ]; then
+  DOMAIN=$(echo $1 | sed -e "s/[^/]*\/\/\([^@]*@\)\?\([^:/]*\).*/\2/" | awk -F '.' '{print $(NF-1)"."$(NF)}')
+  echo "==> Downloading website from $1 restricted to domain $DOMAIN"
+  wget \
+    --recursive \
+    -page-requisites \
+    --convert-links \
+    --restrict-file-names=windows \
+    --domains "$DOMAIN" \
+    --no-parent \
+    -m \
+    -v \
+    --wait="$REQUEST_INTERVAL" \
+    --limit-rate="$MAX_DOWNLOAD_SPEED" \
+    -U "$USER_AGENT" \
+    "$1"
+else
+  echo "usage: $(basename $0) <url>"
+fi
