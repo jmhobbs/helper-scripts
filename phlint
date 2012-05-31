@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+import os
+import sys
+import subprocess
+import multiprocessing
+import math
+
+target = os.getcwd() if 1 >= len(sys.argv) else os.path.abspath(sys.argv[1])
+
+php_files = []
+for (path, dirs, files) in os.walk(target):
+    for f in files:
+        f = os.path.join(path,f)
+        if '.php' == f[-4:] or '.phps' == f[-5:]:
+            php_files.append(f)
+
+total = len(php_files)
+cpus = multiprocessing.cpu_count()
+chunksize = int(math.ceil(total/cpus))
+
+print "==> Checking %d files with %d cores, chunksize %d" % (total, cpus, chunksize)
+
+def check(path):
+    subprocess.call(['php', '-l', path], stdout=subprocess.PIPE)
+
+pool = multiprocessing.Pool(cpus)
+result = pool.map(check, php_files, chunksize)
