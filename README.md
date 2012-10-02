@@ -43,31 +43,7 @@ This script takes a URL and downloads everything you need to mirror it.
 
 **Usage:** ./clone-website http://www.velvetcache.org/
 
-## digiCamProc.sh
-
-**Language:** Bash
-
-**Requirements:** imagemagick
-
-<http://www.velvetcache.org/2009/03/30/imagemagick-thumbnails-and-contact-sheets>
-
-This script will take a bunch of jpg's and create thumbnails and contact sheets for all of them.
-
-**Usage:** ./digiCamProc.sh
-
-## KolorTool
-
-**Language:** Python
-
-**Requirements:** pyqt, pykde
-
-<http://www.velvetcache.org/2009/07/17/kolortool-for-kde-4>
-
-This script pops up a KColorChooser dialog so you can grab and/or mix up new colors.
-
-**Usage:** ./KolorTool
-
-## any2mp3.sh
+## any2mp3
 
 **Language:** Bash
 
@@ -79,7 +55,7 @@ This script will take any set of audio files that mplayer can decode and re-enco
 
 **Usage:** ./any2mp3.sh m4a
 
-## compressAudioBooks.sh
+## compress-audio-books
 
 **Language:** Bash
 

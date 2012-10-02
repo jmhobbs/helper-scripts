@@ -1,9 +1,10 @@
 #!/bin/bash
 
-# compressAudioBooks.sh
+# any2mp3
+# http://www.velvetcache.org/2008/03/18/any2mp3
 # http://github.com/jmhobbs/helper-scripts
 #
-# Copyright (c) 2010 John Hobbs
+# Copyright (c) 2008-2010 John Hobbs
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -27,10 +28,19 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 # CHANGELOG
-# 2010-07-27 - Released script. (John Hobbs)
-# ????-??-?? - Created script. (John Hobbs)
+# 2008-03-18 - Created script. (John Hobbs)
 
-mkdir -p processed/
-for A in *.mp3; do
-	lame -h -b 64 --mp3input "$A" processed/"$A";
+if [ "1" != "$#" ]; then
+	echo "usage: $0 [original-extension]"
+	exit 1
+fi  
+
+for i in *.$1; do
+	mplayer -vc null -vo null -ao pcm:fast "$i" -ao pcm:file="${i%.$1}.wav"
 done
+
+for i in *.wav; do
+	lame -h -V2 --vbr-new "$i" "${i%.wav}.mp3"
+done
+
+rm *.wav
