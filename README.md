@@ -19,17 +19,17 @@ A mutli-process PHP linter, using <tt>php -l</tt>.  It takes the number of cores
 Using multiple processes speeds things up.  Here's and example run on my
 machine.
 
-  jmhobbs@Cordelia$ time `for i in $(find . -iname '*.php'); do php -l $i; done`
-  real1m19.004s
-  user0m44.643s
-  sys0m30.570s
-  jmhobbs@Cordelia$ time phlint
-  ==> Checking 1640 files with 8 cores, chunksize 205
-
-  real0m13.912s
-  user0m59.512s
-  sys0m36.158s
-  jmhobbs@Cordelia$ 
+    jmhobbs@Cordelia$ time `for i in $(find . -iname '*.php'); do php -l $i; done`
+    real1m19.004s
+    user0m44.643s
+    sys0m30.570s
+    jmhobbs@Cordelia$ time phlint
+    ==> Checking 1640 files with 8 cores, chunksize 205
+    
+    real0m13.912s
+    user0m59.512s
+    sys0m36.158s
+    jmhobbs@Cordelia$ 
 
 It's over a minute better in wall clock time.
 
