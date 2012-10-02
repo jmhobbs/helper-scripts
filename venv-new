@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Creates a new virtualenv in my default folder name and touches a new requirements.txt
+
+virtualenv venv --no-site-packages
+touch requirements.txt
