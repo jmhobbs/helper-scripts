@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Creates a new MySQL database with the given name, and a user on that database with 
+# the same name, and the name as the password.
+
+if [ "1" != "$#" ]; then
+	echo "usage: $0 [database-name]"
+	exit 1
+fi
+
+echo "Enter your root MySQL password to continue;"
+echo "CREATE DATABASE \`$1\`; GRANT ALL ON \`$1\`.* TO \`$1\`@localhost IDENTIFIED BY '$1'; FLUSH PRIVILEGES;" | mysql -u root -p --default-character-set=utf8

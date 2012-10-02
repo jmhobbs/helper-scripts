@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# All of my dev databases are created mysql-dev-new and thus are uniformly named
+# This script quickly pulls up mysql-cli for a given database.
+
+if [ "1" != "$#" ]; then
+	echo "usage: $0 [database-name]"
+	exit 1
+fi	 
+
+mysql -u $1 -p$1 $1 --default-character-set=utf8 --prompt="$1> "
