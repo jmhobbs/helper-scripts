@@ -7,7 +7,7 @@
 # which is what this script greps for, so be aware you need ssh_mux_%h in ControlPath.
 
 if [ "$1" != "" ]; then
-	ps aux | grep "ssh_mux_$1" | grep -v grep | awk '{print $2}' | xargs kill 2&>1 > /dev/null
+	ps aux | grep "ssh_mux_$1" | grep -v grep | awk '{print $2}' | xargs kill 2>&1 > /dev/null
 else
-	ps aux | grep ssh_mux | grep -v grep | awk '{print $2}' | xargs kill 2&>1 > /dev/null
+	ps aux | grep ssh_mux | grep -v grep | awk '{print $2}' | xargs kill 2>&1 > /dev/null
 fi
