@@ -4,7 +4,7 @@
 # This script quickly pulls up mysql-cli for a given database.
 
 if [ "1" != "$#" ]; then
-	echo "usage: $0 [database-name]"
+	echo "usage: $(basename $0) [database-name]"
 	exit 1
 fi	 
 
